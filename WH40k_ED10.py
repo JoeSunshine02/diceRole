@@ -1,0 +1,1 @@
+#class contains keywords unique for warhammer 40k 10th edition
