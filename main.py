@@ -9,6 +9,6 @@ import pandas as pd
 rollerConfig = {
     "NumberOfDice": 0,
     "NumberOfSides": 0,
-    "ValSuccess": 0
+    "ValSuccess": 0,
+    "AntiType": ""
 }
-print("hello world")
