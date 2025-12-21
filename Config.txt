@@ -1,0 +1,5 @@
+GameType: [WarHammer10]
+GameSubType: [WH10th]
+DefNumberOfDice: [200]
+DefNumberOfSides: [6]
+DefValSuccess: [4]

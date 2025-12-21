@@ -1,0 +1,30 @@
+Config notes
+
+program is configured in Config.txt
+Required config are labled in config text. missing required values will throw and expetion
+GameType sets additonal config helper class for roler 
+GameSubtType (might not be used) sets additional config for editions (the more i think about it sub types are probobly not needed)
+All config values must be wrapped inside brackets "[]". values not wrapped in brackets will be skiped by the config helper class
+Config names must end with a colon ":" values not ending with a colon will be skiped by the config helper class
+Config values starting with "Def" may be overwritten by additional config values. Defaults must be provided to prevent expetions.
+Additional config values are avilable based on GameType and GameSubtType configuration. 
+
+Instructions
+1. Fill out Config.txt Config 
+    a. GameType
+        Supported GameType
+            i. WarHammer10
+            ii. HorusHeresy3
+    b. GameSubtType
+        Supported GameSubType
+            i. WH10th
+            ii. HH3rd
+    c. DefNumberOfDice
+    d. DefNumberOfSides
+    e. DefValSuccess
+
+2. Fill out the Config file that matches the configured game type. EX WarHammer10.txt
+
+3. Fill out optional Config files. 
+
+4. Run main.py file to run tests.

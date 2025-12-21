@@ -13,3 +13,6 @@ def DevWounds(intRoleValue, **Config):
     if(intRoleValue >= Config["ValSucess"]):
         return True
     return False
+#def antiUnit(intRoleValue,strTargetType **Config):
+ #   #assume target is a valid 
+  #  if()
