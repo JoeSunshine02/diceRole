@@ -1,0 +1,24 @@
+{"MeltaGun":
+    {
+        "Name": "MeltaGun",
+        "Description": "melta gun",
+        "BSSkill": 3,
+        "Strength": 9,
+        "AP": 4,
+        "Damage": "d6",
+        "KeyWord": [
+            {"KeyWord": "Melta", "KeyValue": 2}
+        ]
+    },"HeavyBolter":
+    {
+        "Name": "Heavy Bolter",
+        "Description": "big bolter",
+        "BSSkill": 3,
+        "Strength": 5,
+        "AP": 1,
+        "Damage": 2,
+        "KeyWord": [
+            {"KeyWord": "SustainedHits", "KeyValue": 1}
+        ]
+    }
+}

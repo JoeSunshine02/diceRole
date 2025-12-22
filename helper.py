@@ -5,7 +5,13 @@ class RequiredConfig:
     # validation rules for required config
 
     #Constructor
-    def __init__(self,GameType, GameSubType, DefNumberOfDice, DefNumberOfSides, DefValSuccess):
+    def __init__(self,GameType, 
+                 GameSubType, 
+                 DefNumberOfDice, 
+                 DefNumberOfSides, 
+                 DefValSuccess
+                ):
+        
         self.GameType = GameType
         self.GameSubType = GameSubType
         try:
@@ -82,7 +88,7 @@ class RequiredConfig:
     def ValidateDefNumberOfSides(self):
          if self.DefNumberOfSides <2:
               raise Exception("Dice sides cannot be less then 2")
-         if self.DefNumberOfDice > 100:
+         if self.DefNumberOfSides > 100:
               raise Exception("Dice sides cannot be greater then 100")
          if(self.DefNumberOfSides > 6):
               print("Configured number of sides exceeds standard 6")
@@ -92,6 +98,13 @@ class RequiredConfig:
          #DefValSucess might be deprciated soon.
          pass
 
+    def PrintConfig(self):
+         print("Loaded Config")
+         print(f"{self.GameType}")
+         print(f"{self.GameSubType}")
+         print(f"{self.DefNumberOfDice}")
+         print(f"{self.DefNumberOfSides}")
+         print(f"{self.DefValSuccess}\n")
 
 def ConfigValidater(ConfigRow):
     #validate config lines for formating
@@ -129,7 +142,7 @@ def LoadMasterConfig():
                 break
         if not validReq:
             raise Exception("Config option "+ConfigOpt+" is not a valid configuration option")
-    print(RequiredDict)
+    #print(RequiredDict)
 
     #build Req config object
     return RequiredConfig(GameType=RequiredDict["GameType"],

@@ -1,0 +1,20 @@
+{"Guardsman":
+    {
+        "Name": "Guardsman",
+        "Description": "cannonfodder",
+        "Toughness": 3,
+        "Wounds": 1,
+        "Save": 5,
+        "Invul": 0,
+        "KeyWord": []
+    },"SpaceMarineInterssesor":
+    {
+        "Name": "Intersessor",
+        "Description": "Space Marine",
+        "Toughness": 3,
+        "Wounds": 1,
+        "Save": 5,
+        "Invul": 0,
+        "KeyWord": [] 
+    }
+}
