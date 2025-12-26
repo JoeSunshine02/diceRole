@@ -1,5 +1,6 @@
 #Helper functions for program 
-
+import dearpygui.dearpygui as dpg
+import WH10thHelper as Wh10
 #Interprate config file for rolling function
 class RequiredConfig:
     # validation rules for required config
@@ -106,14 +107,14 @@ class RequiredConfig:
          print(f"{self.DefNumberOfSides}")
          print(f"{self.DefValSuccess}\n")
 
+# validate config format. Main use before loading config into Master Config Object
 def ConfigValidater(ConfigRow):
     #validate config lines for formating
     if ConfigRow.find(":") == -1:
             raise Exception("Config option is not formated Correctly. Options must end in a colon :")
     if ConfigRow.find("[") == -1 or ConfigRow.find("]") == -1 :
             raise Exception("Config value is not formated Correctly. Values must be wrapped in brackets [] :")
-    
-
+#load master config file into Required Config Object
 def LoadMasterConfig():
     #Load config file into context
     with open("Config.txt") as Config:
@@ -150,8 +151,91 @@ def LoadMasterConfig():
                           DefNumberOfDice= RequiredDict["DefNumberOfDice"],
                           DefNumberOfSides= RequiredDict["DefNumberOfSides"],
                           DefValSuccess= RequiredDict["DefValSuccess"])
-            
-        
+
+#loads approprate weapon list from details in MasterConfigObj
+def MasterLoader(MasterConfigObj,LoadType, DisplayOnLoad, ParentTag):
+     match LoadType:
+         case "Weapon":
+               LoadList = MasterWeaponLoader(MasterConfigObj)
+         case "Target":
+               LoadList = MasterTargetLoader(MasterConfigObj)
+         case _:
+               raise Exception(f"Load type: {LoadType} could not be found")
+     if DisplayOnLoad:
+        #  MasterElementCleanUp(ParentTag)
+          MasterElementDisplay(LoadList, LoadType,MasterConfigObj.GameType, False)
+     return LoadList
+# returns weapon list from provided game type
+def MasterWeaponLoader(MasterConfigObj):
+     gameType = MasterConfigObj.GameType
+     match gameType:
+          case "WarHammer10":
+            return Wh10.WeaponLoader()   
+          case _:
+            raise Exception(f"GameType {gameType} does not have a loader function")
+# returns target list from provided game type
+def MasterTargetLoader(MasterConfigObj):
+     gameType = MasterConfigObj.GameType
+     match gameType:
+          case "WarHammer10":
+            return Wh10.TargetLoader()   
+          case _:
+            raise Exception(f"GameType {gameType} does not have a loader function")
+          
+
+#Adds elemets to UI from provided Element Object
+def MasterElementDisplay(DisplayList,DisplayType, GameType, DispalyModeSimple = True ):
+    #simple display mode to display name and desc
+     if DispalyModeSimple:
+          with dpg.child_window(width = 1200, height = 200,tag=DisplayType):
+             dpg.add_text(f"{DisplayType} list:".upper())
+             for load in DisplayList:
+                 with dpg.group(horizontal=True):
+                    dpg.add_text(load.Name)
+                    dpg.add_text(load.Desc)
+          return
+     
+     #non-simple mode needs to check display type
+     match DisplayType:
+         case "Weapon":
+               DisplayTagList = MasterWeaponDisplay(DisplayList, GameType)
+         case "Target":
+               DisplayTagList = MasterTargetDisplay(DisplayList, GameType)
+         case _:
+               raise Exception(f"display type: {DisplayType} could not be found")
+     return DisplayTagList     
+
+def MasterWeaponDisplay(DisplayList, gameType):
+     match gameType:
+          case "WarHammer10":
+            return Wh10.WeaponDisplay(DisplayList)   
+          case _:
+            raise Exception(f"GameType {gameType} does not have a Display function")
+
+
+def MasterTargetDisplay(DisplayList, gameType):
+      match gameType:
+          case "WarHammer10":
+            return Wh10.TargetDisplay(DisplayList)   
+          case _:
+            raise Exception(f"GameType {gameType} does not have a Display function")
+
+
+#delets element from provided tag and all children
+#function can be called as a callback
+def MasterElementCleanUp(sender, app_data,ParentTag):
+     dpg.delete_item(ParentTag)
+
+# Master Element Display Wrapper for callback
+def MasterDisplayCallback(sender, app_data, user_data ):
+    MasterElementDisplay(user_data[0],
+                         user_data[1],
+                         user_data[2],
+                         user_data[3])
+    
+#clean call to end program.
+def KillMain():
+     dpg.destroy_context()
 
 
 

@@ -9,34 +9,38 @@ import pandas as pd
 from helper import *
 from WH10thHelper import *
 
-from tkinter import *
-from tkinter import ttk
+#from tkinter import *
+#from tkinter import ttk
+
+import dearpygui.dearpygui as dpg
+import dearpygui.demo as demo
 
 ReqConfig = LoadMasterConfig()
 ReqConfig.MasterValidate()
 
-WeaponList = WeaponLoader()
-for weapon in WeaponList:
-    print(weapon)
+dpg.create_context()
+dpg.create_viewport(title='DiceRole', width=800, height=600)
+with dpg.window(tag = "DiceRole" ):
+    with dpg.menu(label = "Menu"):
+        #dpg.add_menu(label = "Menu")
+        #dpg.add_text("additional menu options coming soon")
+        dpg.add_menu_item(label="Exit", callback=KillMain)
+    
+    dpg.add_text("Welcome to the generic dice roller. The following Config has been loaded.")
+    dpg.add_text(f"Game Type: {ReqConfig.GameType}")
+    dpg.add_text(f"Game Edition: {ReqConfig.GameSubType}")
+    with dpg.child_window(width=1200, height=400, tag = "RollParent"):
+        # master config has been loaded, interprite master config and load profile.
+        dpg.add_text("load profile")
 
-TargetList = TargetLoader()
-for target in TargetList:
-    print(target)
-
-root = Tk()
-root.title("Dice roller Ver 0.0")
-frm = ttk.Frame(root, padding=(3, 3, 12,12))
-frm.grid(column=0, row=0, sticky=(N,W,E,S))
-
-gameTypeLabel = ttk.Label(frm, text = 'Game Type:').grid(column=0,columnspan=2, row=1, sticky=(W))
-GameType = ttk.Label(frm, text = ReqConfig.GameType).grid(column=2, row = 1, sticky = (E))
-
-GameSubtypeLabel = ttk.Label(frm,text = 'Game Sub Type').grid(column=0,columnspan=2, row=2, sticky=(W))
-GameSubType = ttk.Label(frm,text=ReqConfig.GameSubType).grid(column=2, row=2, sticky=(W,E))
-
-root.columnconfigure(0, weight=1)
-root.rowconfigure(0, weight=1)
-frm.columnconfigure(0, weight=1)
-for child in frm.winfo_children():
-    child.grid_configure(padx=5, pady=5)
-#root.mainloop()
+       
+        WeaponList = MasterLoader(ReqConfig,"Weapon", False, "WeaponParent")
+        MasterElementDisplay(WeaponList,"Weapon", ReqConfig.GameType, False)
+        
+        TargetList = MasterLoader(ReqConfig,"Target", False, "TargetParent")
+        MasterElementDisplay(TargetList,"Target",ReqConfig.GameType, False)
+dpg.setup_dearpygui()
+dpg.show_viewport()
+dpg.set_primary_window("DiceRole", True)
+dpg.start_dearpygui()
+dpg.destroy_context()

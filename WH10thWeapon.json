@@ -6,8 +6,9 @@
         "Strength": 9,
         "AP": 4,
         "Damage": "d6",
+        "Attacks": 1,
         "KeyWord": [
-            {"KeyWord": "Melta", "KeyValue": 2}
+            {"Melta": 2}
         ]
     },"HeavyBolter":
     {
@@ -17,8 +18,21 @@
         "Strength": 5,
         "AP": 1,
         "Damage": 2,
+        "Attacks": 3,
         "KeyWord": [
-            {"KeyWord": "SustainedHits", "KeyValue": 1}
+            {"SustainedHits": 1}
+        ]
+    },"PlagueCombiBolter":
+    {
+        "Name": "Plague Combi Bolter",
+        "Description": "infected combi bolter",
+        "BBSKill": 3,
+        "Strength": 4,
+        "AP": 0,
+        "Damage": 1,
+        "Attacks": 2,
+        "KeyWord": [
+            {"LethalHits":"None","RapidFire":2}
         ]
     }
 }
